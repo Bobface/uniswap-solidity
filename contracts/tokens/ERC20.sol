@@ -1,4 +1,4 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.5.6;
 import "../utils/SafeMath.sol";
 
 
@@ -20,8 +20,8 @@ contract ERC20 {
   mapping (address => uint256) internal _balances;
   mapping (address => mapping (address => uint256)) internal _allowed;
   
-  event Transfer(address indexed from, address indexed to, uint256 value);
-  event Approval(address indexed owner, address indexed spender, uint256 value);
+  event Transfer(address indexed _from, address indexed _to, uint256 _value);
+  event Approval(address indexed _owner, address indexed _spender, uint256 _value);
 
   uint256 internal _totalSupply;
 

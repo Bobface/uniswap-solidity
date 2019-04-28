@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@aragon/test-helpers@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@aragon/test-helpers/-/test-helpers-1.2.2.tgz#95340175d923f45cf9b7e961d097ccf006db8cb4"
+  integrity sha512-NJcK2dg8v8rLIMiIYslDsYVoskjDA5V4Z0C+bo+WoMvjzwVjlELGHdLpEbxLVvd6V7zb0pWH/qtQP5dCsgoETw==
+
 "@types/chai-as-promised@^7.1.0":
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/@types/chai-as-promised/-/chai-as-promised-7.1.0.tgz#010b04cde78eacfb6e72bfddb3e58fe23c2e78b9"
@@ -131,6 +136,19 @@ accepts@~1.3.5:
   dependencies:
     mime-types "~2.1.18"
     negotiator "0.6.1"
+
+adex-protocol-eth@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/adex-protocol-eth/-/adex-protocol-eth-3.1.1.tgz#3b82df54b1c002476423cdc8ecc3526cf6ec58c8"
+  integrity sha512-MTwJbc+CHdiKO08OxATcDPTWfOtQAx9DlByv5NsZuHKoYyn2xg+Wvns8KcojfBWLF8BTD2FrSvxPuuLOsJ3jLw==
+  dependencies:
+    bn.js "^4.11.8"
+    ethereumjs-abi "^0.6.5"
+    ethereumjs-util "^6.1.0"
+    ethers "^4.0.27"
+    js-sha3 "^0.8.0"
+    solc "0.5.6"
+    truffle "^5.0.10"
 
 aes-js@3.0.0:
   version "3.0.0"
@@ -2263,6 +2281,14 @@ ethereumjs-abi@0.6.5:
     bn.js "^4.10.0"
     ethereumjs-util "^4.3.0"
 
+ethereumjs-abi@^0.6.5:
+  version "0.6.7"
+  resolved "https://registry.yarnpkg.com/ethereumjs-abi/-/ethereumjs-abi-0.6.7.tgz#d1d1c5cdb8d910a7d97645ba9e93be5d153bba2e"
+  integrity sha512-EMLOA8ICO5yAaXDhjVEfYjsJIXYutY8ufTE93eEKwsVtp2usQreKwsDTJ9zvam3omYqNuffr8IONIqb2uUslGQ==
+  dependencies:
+    bn.js "^4.11.8"
+    ethereumjs-util "^6.0.0"
+
 "ethereumjs-abi@git+https://github.com/ethereumjs/ethereumjs-abi.git":
   version "0.6.5"
   resolved "git+https://github.com/ethereumjs/ethereumjs-abi.git#2863c40e0982acfc0b7163f0285d4c56427c7799"
@@ -2366,6 +2392,19 @@ ethereumjs-util@^6.0.0:
     safe-buffer "^5.1.1"
     secp256k1 "^3.0.1"
 
+ethereumjs-util@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/ethereumjs-util/-/ethereumjs-util-6.1.0.tgz#e9c51e5549e8ebd757a339cc00f5380507e799c8"
+  integrity sha512-URESKMFbDeJxnAxPppnk2fN6Y3BIatn9fwn76Lm8bQlt+s52TpG8dN9M66MLPuRAiAOIqL3dfwqWJf0sd0fL0Q==
+  dependencies:
+    bn.js "^4.11.0"
+    create-hash "^1.1.2"
+    ethjs-util "0.1.6"
+    keccak "^1.0.2"
+    rlp "^2.0.0"
+    safe-buffer "^5.1.1"
+    secp256k1 "^3.0.1"
+
 ethereumjs-vm@2.3.4:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/ethereumjs-vm/-/ethereumjs-vm-2.3.4.tgz#f635d7cb047571a1840a6e9a74d29de4488f8ad6"
@@ -2463,6 +2502,22 @@ ethers@^4.0.0-beta.1, ethers@^4.0.23:
     uuid "2.0.1"
     xmlhttprequest "1.8.0"
 
+ethers@^4.0.27:
+  version "4.0.27"
+  resolved "https://registry.yarnpkg.com/ethers/-/ethers-4.0.27.tgz#e570b0da9d805ad65c83d81919abe02b2264c6bf"
+  integrity sha512-+DXZLP/tyFnXWxqr2fXLT67KlGUfLuvDkHSOtSC9TUVG9OIj6yrG5JPeXRMYo15xkOYwnjgdMKrXp5V94rtjJA==
+  dependencies:
+    "@types/node" "^10.3.2"
+    aes-js "3.0.0"
+    bn.js "^4.4.0"
+    elliptic "6.3.3"
+    hash.js "1.1.3"
+    js-sha3 "0.5.7"
+    scrypt-js "2.0.4"
+    setimmediate "1.0.4"
+    uuid "2.0.1"
+    xmlhttprequest "1.8.0"
+
 ethjs-abi@0.1.8:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/ethjs-abi/-/ethjs-abi-0.1.8.tgz#cd288583ed628cdfadaf8adefa3ba1dbcbca6c18"
@@ -2480,7 +2535,7 @@ ethjs-unit@0.1.6:
     bn.js "4.11.6"
     number-to-bn "1.7.0"
 
-ethjs-util@^0.1.3, ethjs-util@^0.1.6:
+ethjs-util@0.1.6, ethjs-util@^0.1.3, ethjs-util@^0.1.6:
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/ethjs-util/-/ethjs-util-0.1.6.tgz#f308b62f185f9fe6237132fb2a9818866a5cd536"
   integrity sha512-CUnVOQq7gSpDHZVVrQW8ExxUETWrnrvXYvYz55wOU8Uj4VCgw56XC2B/fVqQN+f7gmrnRHSLVnFAwsCuNwji8w==
@@ -3693,6 +3748,11 @@ js-sha3@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.3.1.tgz#86122802142f0828502a0d1dee1d95e253bb0243"
   integrity sha1-hhIoAhQvCChQKg0d7h2V4lO7AkM=
+
+js-sha3@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/js-sha3/-/js-sha3-0.8.0.tgz#b9b7a5da73afad7dedd0f8c463954cbde6818840"
+  integrity sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==
 
 js-string-escape@^1.0.1:
   version "1.0.1"
@@ -5727,6 +5787,20 @@ solc@0.5.0:
     semver "^5.5.0"
     yargs "^11.0.0"
 
+solc@0.5.6:
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/solc/-/solc-0.5.6.tgz#13015328c61c188b96ef2c2889d73ac705195fba"
+  integrity sha512-BuvrLwOSAGEUbE4jffLBcO9Vm8OVgxImE5qFTHzjH2n+RqBHeqDDOY0gU4LvGWsA6ttjADJyRriF9Pp0vjIq2g==
+  dependencies:
+    command-exists "^1.2.8"
+    fs-extra "^0.30.0"
+    keccak "^1.0.2"
+    memorystream "^0.3.1"
+    require-from-string "^2.0.0"
+    semver "^5.5.0"
+    tmp "0.0.33"
+    yargs "^11.0.0"
+
 solc@^0.4.2:
   version "0.4.25"
   resolved "https://registry.yarnpkg.com/solc/-/solc-0.4.25.tgz#06b8321f7112d95b4b903639b1138a4d292f5faa"
@@ -5737,20 +5811,6 @@ solc@^0.4.2:
     require-from-string "^1.1.0"
     semver "^5.3.0"
     yargs "^4.7.1"
-
-solc@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/solc/-/solc-0.5.3.tgz#bb6d4e8e785b8b3ac0e6d096b9213bf2d0ca15b6"
-  integrity sha512-H9apkutqTa+zEF1T13q5fvAC0aMcbdg6JkUiGXObTJuZydq6Z6EgjI1OS9MGz0y3z4c0Vp1Ww2waEq0jMRm/Rw==
-  dependencies:
-    command-exists "^1.2.8"
-    fs-extra "^0.30.0"
-    keccak "^1.0.2"
-    memorystream "^0.3.1"
-    require-from-string "^2.0.0"
-    semver "^5.5.0"
-    tmp "0.0.33"
-    yargs "^11.0.0"
 
 solidity-coverage@^0.5.11:
   version "0.5.11"
@@ -6426,6 +6486,16 @@ truffle-resolver@^4.0.4:
     truffle-contract "^3.0.6"
     truffle-expect "^0.0.4"
     truffle-provisioner "^0.1.1"
+
+truffle@^5.0.10:
+  version "5.0.14"
+  resolved "https://registry.yarnpkg.com/truffle/-/truffle-5.0.14.tgz#589e301f64aac1b22481c5e41b31aa08bbcd8fea"
+  integrity sha512-Mlf4S58NMyR8YZFvQLAzA+7eCaDZw6ZSa92NWXDQjy1RbUfpl08/VPa06KLT+LosQuOPZr/NSH9f0u2qxfo/Qw==
+  dependencies:
+    app-module-path "^2.2.0"
+    mocha "^4.1.0"
+    original-require "1.0.1"
+    solc "0.5.0"
 
 truffle@^5.0.3:
   version "5.0.3"

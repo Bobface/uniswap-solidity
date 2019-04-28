@@ -1,9 +1,9 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.5.6;
 import "../tokens/ERC20.sol";
 import "../interfaces/IERC20.sol";
 import "../interfaces/IUniswapFactory.sol";
 import "../interfaces/IUniswapExchange.sol";
-
+import "../../node_modules/adex-protocol-eth/contracts/libs/SafeERC20.sol";
 
 contract UniswapExchange is ERC20 {
 
@@ -17,7 +17,8 @@ contract UniswapExchange is ERC20 {
   uint256 public decimals;     // 18
   IERC20 token;                // address of the ERC20 token traded on this contract
   IUniswapFactory factory;     // interface for the factory that created this contract
-  
+
+
   // Events
   event TokenPurchase(address indexed buyer, uint256 indexed eth_sold, uint256 indexed tokens_bought);
   event EthPurchase(address indexed buyer, uint256 indexed tokens_sold, uint256 indexed eth_bought);
@@ -29,19 +30,18 @@ contract UniswapExchange is ERC20 {
   |            Constsructor           |
   |__________________________________*/
 
-  /**  
+  /**
    * @dev This function acts as a contract constructor which is not currently supported in contracts deployed
    *      using create_with_code_of(). It is called once by the factory during contract creation.
    */
   function setup(address token_addr) public {
-    assert( address(factory) == address(0) && address(token) == address(0) && token_addr != address(0));
+    assert(address(factory) == address(0) && address(token) == address(0) && token_addr != address(0));
     factory = IUniswapFactory(msg.sender);
     token = IERC20(token_addr);
     name = 0x556e697377617020563100000000000000000000000000000000000000000000;
     symbol = 0x554e492d56310000000000000000000000000000000000000000000000000000;
     decimals = 18;
   }
-
 
   /***********************************|
   |        Exchange Functions         |
@@ -91,7 +91,7 @@ contract UniswapExchange is ERC20 {
     uint256 token_reserve = token.balanceOf(address(this));
     uint256 tokens_bought = getInputPrice(eth_sold, address(this).balance.sub(eth_sold), token_reserve);
     assert(tokens_bought >= min_tokens);
-    assert(token.transfer(recipient, tokens_bought));
+    SafeERC20.transfer(address(token), recipient, tokens_bought);
     emit TokenPurchase(buyer, eth_sold, tokens_bought);
     return tokens_bought;
   }
@@ -129,7 +129,7 @@ contract UniswapExchange is ERC20 {
     if (eth_refund > 0) {
       buyer.transfer(eth_refund);
     }
-    assert(token.transfer(recipient, tokens_bought));
+    SafeERC20.transfer(address(token), recipient, tokens_bought);
     emit TokenPurchase(buyer, eth_sold, tokens_bought);
     return eth_sold;
   }
@@ -165,7 +165,7 @@ contract UniswapExchange is ERC20 {
     uint256 wei_bought = eth_bought;
     assert(wei_bought >= min_eth);
     recipient.transfer(wei_bought);
-    assert(token.transferFrom(buyer, address(this), tokens_sold));
+    SafeERC20.transferFrom(address(token), buyer, address(this), tokens_sold);
     emit EthPurchase(buyer, tokens_sold, wei_bought);
     return wei_bought;
   }
@@ -204,7 +204,7 @@ contract UniswapExchange is ERC20 {
     // tokens sold is always > 0
     assert(max_tokens >= tokens_sold);
     recipient.transfer(eth_bought);
-    assert(token.transferFrom(buyer, address(this), tokens_sold));
+    SafeERC20.transferFrom(address(token), buyer, address(this), tokens_sold);
     emit EthPurchase(buyer, tokens_sold, eth_bought);
     return tokens_sold;
   }
@@ -251,7 +251,7 @@ contract UniswapExchange is ERC20 {
     uint256 eth_bought = getInputPrice(tokens_sold, token_reserve, address(this).balance);
     uint256 wei_bought = eth_bought;
     assert(wei_bought >= min_eth_bought);
-    assert(token.transferFrom(buyer, address(this), tokens_sold));
+    SafeERC20.transferFrom(address(token), buyer, address(this), tokens_sold);
     uint256 tokens_bought = IUniswapExchange(exchange_addr).ethToTokenTransferInput.value(wei_bought)(min_tokens_bought, deadline, recipient);
     emit EthPurchase(buyer, tokens_sold, wei_bought);
     return tokens_bought;
@@ -321,7 +321,7 @@ contract UniswapExchange is ERC20 {
     uint256 tokens_sold = getOutputPrice(eth_bought, token_reserve, address(this).balance);
     // tokens sold is always > 0
     assert(max_tokens_sold >= tokens_sold && max_eth_sold >= eth_bought);
-    assert(token.transferFrom(buyer, address(this), tokens_sold));
+    SafeERC20.transferFrom(address(token), buyer, address(this), tokens_sold);
     uint256 eth_sold = IUniswapExchange(exchange_addr).ethToTokenTransferOutput.value(eth_bought)(tokens_bought, deadline, recipient);
     emit EthPurchase(buyer, tokens_sold, eth_bought);
     return tokens_sold;
@@ -553,27 +553,27 @@ contract UniswapExchange is ERC20 {
     uint256 total_liquidity = _totalSupply;
 
     if (total_liquidity > 0) {
-      assert(min_liquidity > 0);
+      require(min_liquidity > 0, "1");
       uint256 eth_reserve = address(this).balance.sub(msg.value);
       uint256 token_reserve = token.balanceOf(address(this));
       uint256 token_amount = (msg.value.mul(token_reserve) / eth_reserve).add(1);
       uint256 liquidity_minted = msg.value.mul(total_liquidity) / eth_reserve;
-      assert(max_tokens >= token_amount && liquidity_minted >= min_liquidity);
+      require(max_tokens >= token_amount && liquidity_minted >= min_liquidity, "2");
       _balances[msg.sender] = _balances[msg.sender].add(liquidity_minted);
       _totalSupply = total_liquidity.add(liquidity_minted);
-      assert(token.transferFrom(msg.sender, address(this), token_amount));
+      SafeERC20.transferFrom(address(token), msg.sender, address(this), token_amount);
       emit AddLiquidity(msg.sender, msg.value, token_amount);
       emit Transfer(address(0), msg.sender, liquidity_minted);
       return liquidity_minted;
 
     } else {
-      assert( address(factory) != address(0) && address(token) != address(0) && msg.value >= 1000000000);
+      assert(address(factory) != address(0) && address(token) != address(0) && msg.value >= 1000000000);
       assert(factory.getExchange(address(token)) == address(this));
       uint256 token_amount = max_tokens;
       uint256 initial_liquidity = address(this).balance;
       _totalSupply = initial_liquidity;
       _balances[msg.sender] = initial_liquidity;
-      assert(token.transferFrom(msg.sender, address(this), token_amount));
+      SafeERC20.transferFrom(address(token), msg.sender, address(this), token_amount);
       emit AddLiquidity(msg.sender, msg.value, token_amount);
       emit Transfer(address(0), msg.sender, initial_liquidity);
       return initial_liquidity;
@@ -588,7 +588,7 @@ contract UniswapExchange is ERC20 {
    * @param deadline Time after which this transaction can no longer be executed.
    * @return The amount of ETH && Tokens withdrawn.
    */
-  function removeLiquidity(uint256 amount, uint256 min_eth, uint256 min_tokens, uint256 deadline) public returns (uint256, uint256) {
+  function removeLiquidity(uint256 amount, uint256 min_eth, uint256 min_tokens, uint256 deadline) public returns (uint256 out, uint256) {
     assert(amount > 0 && deadline > block.timestamp && min_eth > 0 && min_tokens > 0);
     uint256 total_liquidity = _totalSupply;
     assert(total_liquidity > 0);
@@ -600,7 +600,7 @@ contract UniswapExchange is ERC20 {
     _balances[msg.sender] = _balances[msg.sender].sub(amount);
     _totalSupply = total_liquidity.sub(amount);
     msg.sender.transfer(eth_amount);
-    assert(token.transfer(msg.sender, token_amount));
+    SafeERC20.transfer(address(token), msg.sender, token_amount);
     emit RemoveLiquidity(msg.sender, eth_amount, token_amount);
     emit Transfer(msg.sender, address(0), amount);
     return (eth_amount, token_amount);

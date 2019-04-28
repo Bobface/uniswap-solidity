@@ -16,14 +16,15 @@ module.exports = {
       gasPrice: 0x01      // <-- Use this low gas price
     },
   },
-
-  solc: {
-    optimizer: {
-      enabled: true,
-      runs: 200
-    },
-    evmVersion: "byzantium",
-    version: "0.5.0"
+  compilers:  {
+    solc: {
+      optimizer: {
+        enabled: true,
+        runs: 200
+      },
+      evmVersion: "byzantium",
+      version: "0.5.7"
+    }
   },
 
   mocha: {
