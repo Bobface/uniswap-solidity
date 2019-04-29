@@ -19,7 +19,7 @@
     "clean": "rm -rf build",
     "migrate": "truffle migrate --network ganache --reset",
     "migrate:rinkeby": "truffle migrate --network rinkeby",
-    "test": "pytest -v tests/",
+    "test": "truffle test",
     "gen:contract-typings": "typechain --target ethers --outDir typings/contracts './build/contracts/*.json'",
     "lint": "yarn lint:ts && yarn lint:sol",
     "lint:fix": "yarn lint:ts:fix && yarn lint:sol:fix",
