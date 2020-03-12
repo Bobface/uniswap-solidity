@@ -75,7 +75,7 @@ contract UniswapFactory {
     if (tokenId == adxExchangeId) {
       return adx;
     }
-    return realUniswapFactory.getTokenWihId(tokenId);
+    return realUniswapFactory.getTokenWithId(tokenId);
   }
 
 }
