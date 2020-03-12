@@ -1,13 +1,27 @@
 
-const HDWalletProvider = require("truffle-hdwallet-provider");´
+const HDWalletProvider = require("truffle-hdwallet-provider");
+require('dotenv').config();
 
 const infuraKey = process.env.INFURA_KEY;
 const privateKey = process.env.PRIVATE_KEY;
+const etherscanKey = process.env.ETHERSCAN_KEY;
 
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
+
+  infuraKey,
+  privateKey,
+  etherscanKey,
+
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+
+  api_keys: {
+    etherscan: etherscanKey
+  },
 
   networks: {
     ganache: {

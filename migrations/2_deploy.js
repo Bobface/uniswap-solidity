@@ -8,6 +8,4 @@ module.exports = async function(deployer, network, accounts) {
     let uniswapMainnet = "";
     
     await deployer.deploy(UniswapFactory, adxMainnet, uniswapMainnet);
-
-    // TODO: Etherscan verification
 };
