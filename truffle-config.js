@@ -1,3 +1,10 @@
+
+const HDWalletProvider = require("truffle-hdwallet-provider");´
+
+const infuraKey = process.env.INFURA_KEY;
+const privateKey = process.env.PRIVATE_KEY;
+
+
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
   // to customize your Truffle configuration!
@@ -15,6 +22,15 @@ module.exports = {
       port: 8545,         // <-- If you change this, also set the port option in .solcover.js.
       gas: 0xfffffffffff, // <-- Use this high gas value
       gasPrice: 0x01      // <-- Use this low gas price
+    },
+    mainnet: {
+      provider: () =>
+        new HDWalletProvider(
+          privateKey,
+          `https://mainnet.infura.io/v3/${infuraKey}`
+        ),
+      network_id: 1,
+      gasPrice: 1500000000
     },
   },
   compilers:  {
