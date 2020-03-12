@@ -4,9 +4,10 @@ module.exports = {
 
   networks: {
     ganache: {
-      network_id: 127001,
+      network_id: "*",
       host: "127.0.0.1",
-      port: 8545
+      port: 8545,
+      gas: 0xfffffffffff
     },
     coverage: {
       host: "localhost",
