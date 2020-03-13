@@ -27,12 +27,9 @@ contract UniswapFactory {
 
     adx = _adx;
     realUniswapFactory = IUniswapFactory(_realUniswapFactory);
+    adxExchange = new UniswapExchange(_adx);
 
-    UniswapExchange exchange = new UniswapExchange();
-    exchange.setup(adx);
-    adxExchange = exchange;
-
-    emit NewExchange(adx, address(exchange));
+    emit NewExchange(_adx, address(adxExchange));
   }
 
   /***********************************|

@@ -44,7 +44,7 @@ module.exports = {
           `https://mainnet.infura.io/v3/${infuraKey}`
         ),
       network_id: 1,
-      gasPrice: 1500000000
+      gasPrice: 2000000000, // 2 gwei
     },
   },
   compilers:  {
