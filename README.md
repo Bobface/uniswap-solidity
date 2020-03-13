@@ -1,20 +1,17 @@
-# Uniswap Solidity
-Implementation of Uniswap contracts in Solidity with SafeERC20 and error reporting
+# Uniswap Fork for AdEX with automatic Etherscan verification
+Implements a Uniswap fork to be able to trade ADX for tokens listed on Uniswap.
 
-## Installation:
+## Usage:
 
-1) Clone uniswap-solidity
-```bash
-$ git clone https://github.com/okwme/uniswap-solidity
-$ cd uniswap-solidity
+
+1. Run `yarn` to install dependencies
+2. Create a `.env` file in the directory root. The `.env` file specifies three parameters like this:
 ```
-
-2) Install dependencies
-```bash
-$ yarn install
+INFURA_KEY=...
+PRIVATE_KEY=0x...
+ETHERSCAN_KEY=...
 ```
+The private key will be used for deployment on Mainnet. 
 
-3) Run tests
-```bash
-$ yarn test
-```
+3. Run `truffle migrate --reset --network mainnet` to deploy to Mainnet.
+4. Run `truffle run verify UniswapFactory --network mainnet` to verify the contract on Etherscan.
